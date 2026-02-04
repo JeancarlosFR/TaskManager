@@ -1,0 +1,50 @@
+<ion-card class="rounded-3xl shadow-sm border border-gray-100 m-0 mt-4">
+  <ion-card-content class="p-5 bg-slate-100">
+    <div class="flex items-start justify-between">
+      <div class="text-xs font-semibold tracking-widest text-gray-400">
+        TSK-{{ task.id | number:'3.0' }}
+      </div>
+
+      <span class="px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-600">
+        Tarea
+      </span>
+    </div>
+
+    <div class="text-lg text-black font-semibold my-4">
+      {{ task.title }}
+    </div>
+    <div class="text-base  my-4">
+      Fecha: {{ task.date.split('T')[0] }}
+    </div>
+
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="text-sm text-gray-500">Estado:</span>
+
+        <span
+          class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold"
+          [ngClass]="task.completed
+            ? 'bg-emerald-100 text-emerald-700'
+            : 'bg-amber-100 text-amber-700'"
+        >
+          <span
+            class="w-2 h-2 rounded-full"
+            [ngClass]="task.completed ? 'bg-emerald-500' : 'bg-amber-500'"
+          ></span>
+
+          {{ task.completed ? 'Completado' : 'Pendiente' }}
+        </span>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <button class="p-2 rounded-xl hover:bg-gray-100 transition">
+          <ion-icon name="refresh-outline" class="text-gray-400 text-lg"></ion-icon>
+        </button>
+
+        <button class="p-2 rounded-xl hover:bg-gray-100 transition">
+          <ion-icon name="trash-outline" class="text-gray-400 text-lg"></ion-icon>
+        </button>
+      </div>
+    </div>
+  </ion-card-content>
+</ion-card>

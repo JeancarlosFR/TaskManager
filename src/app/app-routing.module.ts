@@ -2,14 +2,22 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
+  { path: '', redirectTo: 'tasks', pathMatch: 'full' },
+
   {
-    path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
+    path: 'tasks',
+    loadChildren: () =>
+      import('./pages/tasks-list/tasks-list.module').then(m => m.TasksListPageModule),
   },
   {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
+    path: 'tasks/create',
+    loadChildren: () =>
+      import('./pages/task-create/task-create.module').then(m => m.TaskCreatePageModule),
+  },
+  {
+    path: 'task/detail',
+    loadChildren: () =>
+      import('./pages/task-detail/task-detail.module').then(m => m.TaskDetailPageModule),
   },
 ];
 

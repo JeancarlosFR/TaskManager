@@ -1,0 +1,87 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Tareas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="px-4 py-6 bg-gray-50 min-h-screen">
+    <!-- HEADER -->
+    <div class="flex items-start justify-between">
+      <div>
+        <h1 class="text-2xl font-extrabold text-gray-900">Mis Tareas</h1>
+        <p class="mt-1 text-sm text-gray-500">
+          Tienes {{ tasksHook.pendingCount }} pendientes hoy
+        </p>
+      </div>
+      <!-- Offline toggle -->
+      <div class="flex items-center gap-3">
+        <ion-label class="text-sm text-black">Offline</ion-label>
+        <ion-toggle
+          [checked]="tasksHook.offlineMode"
+          (ionChange)="tasksHook.toggleOfflineMode($event.detail.value)"
+        ></ion-toggle>
+      </div>
+
+      <!-- Avatar -->
+      <button
+        class="w-12 h-12 rounded-full bg-indigo-600 shadow-md flex items-center justify-center"
+      >
+        <ion-icon name="add-outline" class="text-white text-xl"></ion-icon>
+      </button>
+    </div>
+
+    <!-- FILTROS -->
+    <div class="mt-5 flex gap-3 overflow-x-auto pb-2">
+      <button
+        class="px-5 py-3 rounded-2xl text-sm font-semibold border transition whitespace-nowrap"
+        [ngClass]="tasksHook.selectedFilter === 'all'
+          ? 'bg-gray-900 text-white border-gray-900 shadow'
+          : 'bg-white text-gray-500 border-gray-100'"
+        (click)="tasksHook.setFilter('all')"
+      >
+        Todos
+      </button>
+
+      <button
+        class="px-5 py-3 rounded-2xl text-sm font-semibold border transition whitespace-nowrap"
+        [ngClass]="tasksHook.selectedFilter === 'pending'
+          ? 'bg-gray-900 text-white border-gray-900 shadow'
+          : 'bg-white text-gray-500 border-gray-100'"
+        (click)="tasksHook.setFilter('pending')"
+      >
+        Pendiente
+      </button>
+
+      <button
+        class="px-5 py-3 rounded-2xl text-sm font-semibold border transition whitespace-nowrap"
+        [ngClass]="tasksHook.selectedFilter === 'completed'
+          ? 'bg-gray-900 text-white border-gray-900 shadow'
+          : 'bg-white text-gray-500 border-gray-100'"
+        (click)="tasksHook.setFilter('completed')"
+      >
+        Completado
+      </button>
+    </div>
+
+    <!-- LOADING -->
+    @if (tasksHook.loading) {
+    <div class="mt-6 space-y-5">
+      @for (i of [].constructor(tasksHook.filteredTasks.length); track $index) {
+        <app-card-skeleton  ></app-card-skeleton>
+      }
+    </div>
+    } @else {
+    <div class="mt-6 ">
+      @for (task of tasksHook.filteredTasks; track task.id) {
+        <app-task-card [task]="task"  (click)="goToDetail(task)"></app-task-card>
+      }
+    </div>
+    }
+
+    <!-- EMPTY -->
+    @if (!tasksHook.loading && tasksHook.filteredTasks.length === 0) {
+    <div class="mt-6 text-sm text-gray-500">No hay tareas para mostrar.</div>
+    }
+  </div>
+</ion-content>
