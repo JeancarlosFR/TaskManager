@@ -3,5 +3,6 @@ export interface ApiTask {
   id: number;
   title: string;
   completed: boolean;
-  date: string;
+  date?: string;
+  descripcion?: string;
 }

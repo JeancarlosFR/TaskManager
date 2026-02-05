@@ -1,6 +1,4 @@
-// task-detail.page.ts
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { ApiTask } from 'src/app/models/task.model';
 import { TasksService } from 'src/app/services/tasks.service';
 
@@ -15,18 +13,16 @@ export class TaskDetailPage implements OnInit {
   task!: ApiTask;
 
   constructor(
-    private route: ActivatedRoute,
     private tasksService: TasksService
   ) {}
 
   ngOnInit() {
-    const taskData = history.state.task as ApiTask;
-    if (taskData) {
-      this.task = taskData;
-    } else {
-      console.warn('No se pasaron datos de la tarea');
-    }
+  const state = history.state;
+
+  if (state && state.task) {
+    this.task = state.task;
   }
+}
 
   async toggleCompleted() {
     if (this.task) {

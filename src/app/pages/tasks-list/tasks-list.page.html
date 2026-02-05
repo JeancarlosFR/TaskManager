@@ -5,83 +5,129 @@
 </ion-header>
 
 <ion-content>
-  <div class="px-4 py-6 bg-gray-50 min-h-screen">
+  <div class="px-4 py-6 bg-gray-50 dark:bg-gray-900 min-h-screen transition-colors">
     <!-- HEADER -->
     <div class="flex items-start justify-between">
       <div>
-        <h1 class="text-2xl font-extrabold text-gray-900">Mis Tareas</h1>
-        <p class="mt-1 text-sm text-gray-500">
+        <h1 class="text-2xl font-extrabold text-gray-900 dark:text-white">Mis Tareas</h1>
+        <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
           Tienes {{ tasksHook.pendingCount }} pendientes hoy
         </p>
       </div>
-      <!-- Offline toggle -->
-      <div class="flex items-center gap-3">
-        <ion-label class="text-sm text-black">Offline</ion-label>
-        <ion-toggle
-          [checked]="tasksHook.offlineMode"
-          (ionChange)="tasksHook.toggleOfflineMode($event.detail.value)"
-        ></ion-toggle>
+
+      <!-- Toggles -->
+      <div class="flex items-center gap-4">
+        <!-- Dark Mode toggle -->
+        <div class="flex items-center gap-2">
+          <ion-icon name="moon-outline" class="text-gray-700 dark:text-gray-300"></ion-icon>
+          <ion-toggle
+            [checked]="themeService.darkMode"
+            (ionChange)="themeService.toggleTheme($event.detail.checked)"
+          ></ion-toggle>
+        </div>
+
+        <!-- Offline toggle -->
+        <div class="flex items-center gap-2">
+          <ion-label class="text-sm text-gray-700 dark:text-gray-300">Offline</ion-label>
+          <ion-toggle
+            [checked]="tasksHook.offlineMode"
+            (ionChange)="tasksHook.toggleOfflineMode($event.detail.value)"
+          ></ion-toggle>
+        </div>
       </div>
 
-      <!-- Avatar -->
-      <button
-        class="w-12 h-12 rounded-full bg-indigo-600 shadow-md flex items-center justify-center"
+      <!-- Nueva Tarea -->
+      <ion-button
+        (click)="goToCreate()"
+        class="w-12 h-12 rounded-full shadow-md flex items-center justify-center"
       >
         <ion-icon name="add-outline" class="text-white text-xl"></ion-icon>
-      </button>
+      </ion-button>
     </div>
 
     <!-- FILTROS -->
     <div class="mt-5 flex gap-3 overflow-x-auto pb-2">
-      <button
-        class="px-5 py-3 rounded-2xl text-sm font-semibold border transition whitespace-nowrap"
+      <ion-button
+        fill="clear"
+        class="px-4 py-2 rounded-2xl text-sm font-semibold border transition whitespace-nowrap"
         [ngClass]="tasksHook.selectedFilter === 'all'
-          ? 'bg-gray-900 text-white border-gray-900 shadow'
-          : 'bg-white text-gray-500 border-gray-100'"
+          ? 'bg-gray-900 text-white border-gray-900 shadow dark:bg-gray-700 dark:border-gray-700'
+          : 'bg-white text-gray-500 border-gray-100 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700'"
         (click)="tasksHook.setFilter('all')"
       >
         Todos
-      </button>
+      </ion-button>
 
-      <button
-        class="px-5 py-3 rounded-2xl text-sm font-semibold border transition whitespace-nowrap"
+      <ion-button
+        fill="clear"
+        class="px-4 py-2 rounded-2xl text-sm font-semibold border transition whitespace-nowrap"
         [ngClass]="tasksHook.selectedFilter === 'pending'
-          ? 'bg-gray-900 text-white border-gray-900 shadow'
-          : 'bg-white text-gray-500 border-gray-100'"
+          ? 'bg-gray-900 text-white border-gray-900 shadow dark:bg-gray-700 dark:border-gray-700'
+          : 'bg-white text-gray-500 border-gray-100 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700'"
         (click)="tasksHook.setFilter('pending')"
       >
         Pendiente
-      </button>
+      </ion-button>
 
-      <button
-        class="px-5 py-3 rounded-2xl text-sm font-semibold border transition whitespace-nowrap"
+      <ion-button
+        fill="clear"
+        class="px-4 py-2 rounded-2xl text-sm font-semibold border transition whitespace-nowrap"
         [ngClass]="tasksHook.selectedFilter === 'completed'
-          ? 'bg-gray-900 text-white border-gray-900 shadow'
-          : 'bg-white text-gray-500 border-gray-100'"
+          ? 'bg-gray-900 text-white border-gray-900 shadow dark:bg-gray-700 dark:border-gray-700'
+          : 'bg-white text-gray-500 border-gray-100 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700'"
         (click)="tasksHook.setFilter('completed')"
       >
         Completado
-      </button>
+      </ion-button>
     </div>
 
     <!-- LOADING -->
     @if (tasksHook.loading) {
     <div class="mt-6 space-y-5">
-      @for (i of [].constructor(tasksHook.filteredTasks.length); track $index) {
+      @for (i of [].constructor(itemsPerPage); track $index) {
         <app-card-skeleton  ></app-card-skeleton>
       }
     </div>
     } @else {
     <div class="mt-6 ">
-      @for (task of tasksHook.filteredTasks; track task.id) {
-        <app-task-card [task]="task"  (click)="goToDetail(task)"></app-task-card>
+      @for (task of paginatedTasks; track task.id) {
+        <app-task-card [task]="task" (click)="goToDetail(task)" (delete)="deleteTask($event)"></app-task-card>
       }
     </div>
     }
 
     <!-- EMPTY -->
     @if (!tasksHook.loading && tasksHook.filteredTasks.length === 0) {
-    <div class="mt-6 text-sm text-gray-500">No hay tareas para mostrar.</div>
+    <div class="mt-6 text-sm text-gray-500 dark:text-gray-400">No hay tareas para mostrar.</div>
+    }
+
+    <!-- PAGINACIÓN -->
+    @if (!tasksHook.loading && tasksHook.filteredTasks.length > 0) {
+    <div class="mt-6 flex items-center justify-between gap-4">
+      <ion-button
+        [disabled]="!hasPreviousPage"
+        (click)="previousPage()"
+        class="px-4 py-2 text-white rounded-lg text-sm font-medium"
+        [ngClass]="hasPreviousPage ? 'text-gray-900 dark:text-gray-100' : 'text-gray-400'"
+      >
+        <ion-icon slot="start" name="chevron-back-outline"></ion-icon>
+        Anterior
+      </ion-button>
+
+      <div class="text-sm text-gray-600 dark:text-gray-300">
+        Página {{ currentPage }} de {{ totalPages }}
+      </div>
+
+      <ion-button
+        [disabled]="!hasNextPage"
+        (click)="nextPage()"
+        class="px-4 py-2 text-white rounded-lg text-sm font-medium"
+        [ngClass]="hasNextPage ? 'text-gray-900 dark:text-gray-100' : 'text-gray-400'"
+      >
+        Siguiente
+        <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
+      </ion-button>
+    </div>
     }
   </div>
 </ion-content>

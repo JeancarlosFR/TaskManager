@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { ApiTask } from 'src/app/models/task.model';
 
 @Component({
@@ -9,4 +9,10 @@ import { ApiTask } from 'src/app/models/task.model';
 })
 export class TaskCardComponent {
   @Input() task!: ApiTask;
+  @Output() delete = new EventEmitter<ApiTask>();
+
+  onDelete(event: Event) {
+    event.stopPropagation();
+    this.delete.emit(this.task);
+  }
 }

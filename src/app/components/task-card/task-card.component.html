@@ -1,31 +1,31 @@
-<ion-card class="rounded-3xl shadow-sm border border-gray-100 m-0 mt-4">
-  <ion-card-content class="p-5 bg-slate-100">
+<ion-card class="rounded-3xl shadow-sm border border-gray-100 dark:border-gray-700 m-0 mt-4 dark:bg-gray-800">
+  <ion-card-content class="p-5 bg-slate-100 dark:bg-gray-800">
     <div class="flex items-start justify-between">
-      <div class="text-xs font-semibold tracking-widest text-gray-400">
+      <div class="text-xs font-semibold tracking-widest text-gray-400 dark:text-gray-500">
         TSK-{{ task.id | number:'3.0' }}
       </div>
 
-      <span class="px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-600">
+      <span class="px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50 dark:bg-indigo-900 text-indigo-600 dark:text-indigo-300">
         Tarea
       </span>
     </div>
 
-    <div class="text-lg text-black font-semibold my-4">
+    <div class="text-lg text-black dark:text-white font-semibold my-4">
       {{ task.title }}
     </div>
-    <div class="text-base  my-4">
-      Fecha: {{ task.date.split('T')[0] }}
+    <div class="text-base text-gray-700 dark:text-gray-300 my-4">
+      Fecha: {{ task.date ? task.date.split('T')[0] : 'N/A' }}
     </div>
 
     <div class="flex items-center justify-between">
       <div class="flex items-center gap-2">
-        <span class="text-sm text-gray-500">Estado:</span>
+        <span class="text-sm text-gray-500 dark:text-gray-400">Estado:</span>
 
         <span
           class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold"
           [ngClass]="task.completed
-            ? 'bg-emerald-100 text-emerald-700'
-            : 'bg-amber-100 text-amber-700'"
+            ? 'bg-emerald-100 dark:bg-emerald-900 text-emerald-700 dark:text-emerald-300'
+            : 'bg-amber-100 dark:bg-amber-900 text-amber-700 dark:text-amber-300'"
         >
           <span
             class="w-2 h-2 rounded-full"
@@ -37,13 +37,10 @@
       </div>
 
       <div class="flex items-center gap-3">
-        <button class="p-2 rounded-xl hover:bg-gray-100 transition">
-          <ion-icon name="refresh-outline" class="text-gray-400 text-lg"></ion-icon>
-        </button>
 
-        <button class="p-2 rounded-xl hover:bg-gray-100 transition">
-          <ion-icon name="trash-outline" class="text-gray-400 text-lg"></ion-icon>
-        </button>
+        <ion-button fill="clear" class="p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700 transition" (click)="onDelete($event)">
+          <ion-icon name="trash-outline" class="text-gray-400 dark:text-gray-500 text-lg"></ion-icon>
+        </ion-button>
       </div>
     </div>
   </ion-card-content>

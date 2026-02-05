@@ -10,7 +10,7 @@ const routes: Routes = [
       import('./pages/tasks-list/tasks-list.module').then(m => m.TasksListPageModule),
   },
   {
-    path: 'tasks/create',
+    path: 'task/create',
     loadChildren: () =>
       import('./pages/task-create/task-create.module').then(m => m.TaskCreatePageModule),
   },

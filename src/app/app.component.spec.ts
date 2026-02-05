@@ -1,14 +1,21 @@
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-
 import { AppComponent } from './app.component';
+import { ThemeService } from './services/theme.service';
 
 describe('AppComponent', () => {
-
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [AppComponent],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      providers: [
+        {
+          provide: ThemeService,
+          useValue: {
+            initTheme: jasmine.createSpy(),
+            toggleDarkMode: jasmine.createSpy(),
+            isDarkMode$: { subscribe: () => {} }
+          }
+        }
+      ],
     }).compileComponents();
   });
 
@@ -17,5 +24,4 @@ describe('AppComponent', () => {
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
   });
-
 });

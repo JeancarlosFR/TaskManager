@@ -1,0 +1,35 @@
+ion-item {
+  --background: #f9fafb;
+  --color: #111827;
+  --placeholder-color: #9ca3af;
+}
+
+.dark ion-item {
+  --background: #374151;
+  --color: #ffffff;
+  --placeholder-color: #9ca3af;
+}
+
+ion-input,
+ion-textarea {
+  --color: #111827;
+  --placeholder-color: #9ca3af;
+}
+
+.dark ion-input,
+.dark ion-textarea {
+  --color: #ffffff;
+  --placeholder-color: #9ca3af;
+}
+
+
+ion-datetime-button.datetime-clean::part(native) {
+  background: transparent;
+  box-shadow: none;
+  color: #111827;
+  padding-left: 0;
+}
+
+ion-datetime-button.datetime-clean::part(native)::after {
+  display: none;
+}

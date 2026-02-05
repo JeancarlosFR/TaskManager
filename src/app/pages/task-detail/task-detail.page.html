@@ -7,49 +7,75 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding" style="--background: #ffffff;">
-  <!-- Skeleton -->
-  @if (!task){
-    <ion-card class="p-4 animate-pulse">
-      <div class="h-4 w-24 bg-gray-200 mb-2 rounded"></div>
-      <div class="h-6 w-3/4 bg-gray-300 mb-4 rounded"></div>
-      <div class="h-4 w-1/4 bg-gray-200 mb-2 rounded"></div>
-      <div class="h-4 w-1/2 bg-gray-200 mb-2 rounded"></div>
-      <div class="h-10 bg-gray-300 rounded mt-4"></div>
+<ion-content>
+  <div
+    class="px-4 py-6 bg-gray-50 dark:bg-gray-900 min-h-screen transition-colors"
+  >
+    <!-- Skeleton -->
+    @if (!task){
+    <ion-card class="p-4 animate-pulse bg-slate-100 dark:bg-gray-800">
+      <div class="h-4 w-24 bg-gray-200 dark:bg-gray-700 mb-2 rounded"></div>
+      <div class="h-6 w-3/4 bg-gray-300 dark:bg-gray-600 mb-4 rounded"></div>
+      <div class="h-4 w-1/4 bg-gray-200 dark:bg-gray-700 mb-2 rounded"></div>
+      <div class="h-4 w-1/2 bg-gray-200 dark:bg-gray-700 mb-2 rounded"></div>
+      <div class="h-10 bg-gray-300 dark:bg-gray-600 rounded mt-4"></div>
     </ion-card>
 
-  }
-  <!-- Detalle real -->
-  @if (task){
+    }
+    <!-- Detalle real -->
+    @if (task){
 
-    <ion-card class="p-6 rounded-xl shadow-md bg-slate-100">
+    <ion-card class="p-6 rounded-xl shadow-md bg-slate-100 dark:bg-gray-800">
       <!-- ID -->
-      <div class="text-xs text-gray-400 bg-gray-100 px-2 py-1 rounded inline-block mb-2">
+      <div
+        class="text-xs text-gray-400 dark:text-gray-500 bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded inline-block mb-2"
+      >
         ID: {{ task.id }}
       </div>
 
       <!-- Título -->
-      <h2 class="text-2xl font-semibold mb-2">{{ task.title }}</h2>
-      <p class="text-base font-semibold mb-2">Fecha: {{ task.date.split('T')[0]}}</p>
+      <h2 class="text-2xl font-semibold mb-2 text-gray-900 dark:text-white">
+        {{ task.title }}
+      </h2>
+      <!-- Descripción -->
+      <p class="text-base font-semibold mb-2 text-gray-700 dark:text-gray-300">
+        Descripción: {{ task.descripcion}}
+      </p>
+      <!-- Fecha -->
+      <p class="text-base font-semibold mb-2 text-gray-700 dark:text-gray-300">
+        Fecha: {{ task.date?.split('T')?.[0]}}
+      </p>
 
       <!-- Estado -->
-      <div class="flex items-center text-sm font-medium mb-4"
-           [ngClass]="task.completed ? 'text-green-600' : 'text-yellow-500'">
-        <span class="w-2 h-2 rounded-full mr-2"
-              [ngClass]="task.completed ? 'bg-green-600' : 'bg-yellow-500'"></span>
+      <div
+        class="flex items-center text-sm font-medium mb-4"
+        [ngClass]="task.completed ? 'text-green-600' : 'text-yellow-500'"
+      >
+        <span
+          class="w-2 h-2 rounded-full mr-2"
+          [ngClass]="task.completed ? 'bg-green-600' : 'bg-yellow-500'"
+        ></span>
         {{ task.completed ? 'Completada' : 'Pendiente' }}
       </div>
 
       <!-- USuario -->
       <div class="mb-4">
-        <div class="text-xs text-gray-400 uppercase mb-1">Usuario: {{ task.userId }}</div>
+        <div class="text-xs text-gray-400 uppercase mb-1">
+          Usuario: {{ task.userId }}
+        </div>
       </div>
 
       <!-- Botón Cambiar Estado -->
-      <ion-button expand="block" class="text-white rounded-lg flex items-center justify-center" (click)="toggleCompleted()">
+      <ion-button
+        expand="block"
+        class="text-white rounded-lg flex items-center justify-center"
+        (click)="toggleCompleted()"
+      >
         <ion-icon slot="start" name="sync-outline"></ion-icon>
-        {{ task.completed ? 'Marcar como Pendiente' : 'Marcar como Completada' }}
+        {{ task.completed ? 'Marcar como Pendiente' : 'Marcar como Completada'
+        }}
       </ion-button>
     </ion-card>
-  }
+    }
+  </div>
 </ion-content>
