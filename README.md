@@ -27,7 +27,7 @@ Aplicación móvil desarrollada con Ionic + Angular para la gestión de tareas c
 
 1. **Clonar o descargar el repositorio**
    ```bash
-   cd tasks-app
+   cd TaskManager
    ```
 
 2. **Instalar dependencias**
