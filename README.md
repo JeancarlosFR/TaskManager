@@ -4,10 +4,10 @@ Aplicación móvil desarrollada con Ionic + Angular para la gestión de tareas c
 
 ## 📋 Características Principales
 
-- ✅ **Gestión completa de tareas** (Crear, Leer, Actualizar, Eliminar)
+- ✅ **Gestión completa de tareas** (Crear, Leer, Eliminar)
 - 🔍 **Filtros dinámicos** (Todas, Pendientes, Completadas)
 - 📄 **Paginación** (10 tareas por página)
-- 🌓 **Dark Mode** con persistencia
+- 🌓 **Dark Mode**
 - 💾 **Modo Offline** con almacenamiento local
 - ✨ **Validaciones de formularios** en tiempo real
 - 🎨 **UI moderna** con Tailwind CSS
@@ -52,15 +52,6 @@ npm start
 ```
 
 La aplicación se abrirá automáticamente en `http://localhost:8100`
-
-### Compilación para Producción
-
-**Build optimizado:**
-```bash
-npm run build
-```
-
-Los archivos compilados estarán en la carpeta `www/`
 
 ### Ejecución de Tests
 
@@ -253,7 +244,6 @@ tasks-app/
 
 ### 5. Dark Mode
 - ✅ Toggle en header de lista
-- ✅ Persistencia del tema
 - ✅ Estilos adaptados en todas las vistas
 - ✅ Transiciones suaves
 
@@ -304,11 +294,10 @@ Desarrollado como prueba técnica para demostrar habilidades en:
 
 - La app funciona completamente offline después de la primera carga
 - Los cambios locales persisten entre recargas
-- El dark mode se restaura automáticamente
 - Todas las validaciones funcionan en tiempo real
 - La paginación se adapta dinámicamente al número de tareas
 
-### Mejoras con mas tiempo
+### Mejoras con más tiempo
 
 - Opción para editar tareas
 - Alertas de vencimiento de tareas

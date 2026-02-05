@@ -38,9 +38,11 @@
         {{ task.title }}
       </h2>
       <!-- Descripción -->
-      <p class="text-base font-semibold mb-2 text-gray-700 dark:text-gray-300">
-        Descripción: {{ task.descripcion}}
-      </p>
+       @if( task.descripcion ){
+         <p class="text-base font-semibold mb-2 text-gray-700 dark:text-gray-300">
+           Descripción: {{ task.descripcion}}
+         </p>
+       }
       <!-- Fecha -->
       <p class="text-base font-semibold mb-2 text-gray-700 dark:text-gray-300">
         Fecha: {{ task.date?.split('T')?.[0]}}
